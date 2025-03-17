@@ -1,1 +1,1 @@
-## Full grade with bonus on every exercise, except hw1 (they didn't like the zero heuristic as another heuristic to solve problem3).
+## Full grade with bonus on every exercise, except hw1 problem3 (3/5, euclidean distance needs dividing by 2 + they didn't like my zero heuristic recommendation :P).
