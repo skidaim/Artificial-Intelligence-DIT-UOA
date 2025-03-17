@@ -1,0 +1,345 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[greek,english]{babel}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{exercise}
+
+\begin{document}
+\title{question3}
+\maketitle
+\section{Running A* Algorithm}
+\begin{enumerate}
+\item Inserting S
+\begin{itemize}
+\item Frontier: [(S,8.0)]
+\item Explored: $[\emptyset]$
+\end{itemize}
+
+\item Removing S and inserting its neighbors (R, R)
+\begin{itemize}
+\item Frontier: []
+\item Explored: [(S, 0.0)]
+\end{itemize}
+
+\item Removing R (MOVE: RIGHT) and inserting its neighbors (B, R)
+\begin{itemize}
+\item Frontier: [(R,8.5)]
+\item Explored: [(R, 1.0), (S, 0.0)]
+\end{itemize}
+
+\item Removing R (MOVE: DOWN) and inserting its neighbors (R, B)
+\begin{itemize}
+\item Frontier: [(R,9.0) \(|\) (B,\(\infty\))]
+\item Explored: [(R, 1.0), (R, 1.0), (S, 0.0)]
+\end{itemize}
+
+\item Removing R (MOVE: RIGHT) and inserting its neighbors (B, R)
+\begin{itemize}
+\item Frontier: [(R,9.0) \(|\) (B,\(\infty\))]
+\item Explored: [(R, 1.0), (R, 1.0), (R, 2.0), (S, 0.0)]
+\end{itemize}
+
+\item Removing R (MOVE: DOWN) and inserting its neighbors (R, P)
+\begin{itemize}
+\item Frontier: [(R,9.5) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\))]
+\item Explored: [(R, 1.0), (S, 0.0), (R, 2.0), (R, 2.0), (R, 1.0)]
+\end{itemize}
+
+\item Removing R (MOVE: RIGHT) and inserting its neighbors (R, B)
+\begin{itemize}
+\item Frontier: [(R,9.5) \(|\) (P,10.5) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\))]
+\item Explored: [(R, 1.0), (S, 0.0), (R, 3.0), (R, 2.0), (R, 2.0), (R, 1.0)]
+\end{itemize}
+
+\item Removing R (MOVE: DOWN) and inserting its neighbors (R, R)
+\begin{itemize}
+\item Frontier: [(R,10.0) \(|\) (P,10.5) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\))]
+\item Explored: [(R, 1.0), (S, 0.0), (R, 3.0), (R, 2.0), (R, 3.0), (R, 2.0), (R, 1.0)]
+\end{itemize}
+
+\item Removing R (MOVE: DOWN) and inserting its neighbors (R, B, H)
+\begin{itemize}
+\item Frontier: [(R,10.0) \(|\) (P,10.5) \(|\) (R,10.0) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\))]
+\item Explored: [(R, 1.0), (S, 0.0), (R, 3.0), (R, 2.0), (R, 3.0), (R, 2.0), (R, 1.0), (R, 4.0)]
+\end{itemize}
+
+\item Removing H (MOVE: RIGHT) and inserting its neighbors (B, B, H)
+\begin{itemize}
+\item Frontier: [(R,10.0) \(|\) (P,10.5) \(|\) (R,10.0) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (R,10.5)]
+\item Explored: [(R, 1.0), (S, 0.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 3.0), (R, 2.0), (R, 1.0), (R, 4.0)]
+\end{itemize}
+
+\item Removing H (MOVE: RIGHT) and inserting its neighbors (R, W, R)
+\begin{itemize}
+\item Frontier: [(R,10.0) \(|\) (P,10.5) \(|\) (R,10.0) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (R,10.5) \(|\) (B,\(\infty\))]
+\item Explored: [(R, 1.0), (S, 0.0), (H, 5.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 3.0), (R, 2.0), (R, 1.0), (R, 4.0)]
+\end{itemize}
+
+\item Removing R (MOVE: RIGHT) and inserting its neighbors (R, P, R)
+\begin{itemize}
+\item Frontier: [(R,10.0) \(|\) (R,10.5) \(|\) (R,10.5) \(|\) (R,10.5) \(|\) (P,10.5) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\))]
+\item Explored: [(R, 1.0), (S, 0.0), (H, 5.0), (R, 4.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 3.0), (R, 2.0), (R, 1.0), (R, 4.0)]
+\end{itemize}
+
+\item Removing R (MOVE: DOWN) and inserting its neighbors (B, R)
+\begin{itemize}
+\item Frontier: [(R,10.5) \(|\) (P,10.5) \(|\) (R,10.5) \(|\) (R,10.5) \(|\) (R,10.5) \(|\) (R,10.5) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\))]
+\item Explored: [(R, 1.0), (R, 4.0), (S, 0.0), (H, 5.0), (R, 4.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 3.0), (R, 2.0), (R, 1.0), (R, 4.0)]
+\end{itemize}
+
+\item Removing R (MOVE: RIGHT) and inserting its neighbors (R, R, R)
+\begin{itemize}
+\item Frontier: [(P,10.5) \(|\) (R,10.5) \(|\) (R,10.5) \(|\) (B,\(\infty\)) \(|\) (R,10.5) \(|\) (R,10.5) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\))]
+\item Explored: [(R, 1.0), (R, 4.0), (S, 0.0), (H, 5.0), (R, 4.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 3.0), (R, 2.0), (R, 1.0), (R, 6.0), (R, 4.0)]
+\end{itemize}
+
+\item Removing P (MOVE: RIGHT) and inserting its neighbors (B, P)
+\begin{itemize}
+\item Frontier: [(R,10.5) \(|\) (R,10.5) \(|\) (R,10.5) \(|\) (B,\(\infty\)) \(|\) (R,10.5) \(|\) (R,11.0) \(|\) (R,11.0) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (R,12.0)]
+\item Explored: [(R, 1.0), (R, 4.0), (P, 4.0), (S, 0.0), (H, 5.0), (R, 4.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 3.0), (R, 2.0), (R, 1.0), (R, 6.0), (R, 4.0)]
+\end{itemize}
+
+\item Removing R (MOVE: DOWN) and inserting its neighbors (R, P, B)
+\begin{itemize}
+\item Frontier: [(R,10.5) \(|\) (R,10.5) \(|\) (R,10.5) \(|\) (B,\(\infty\)) \(|\) (P,12.0) \(|\) (R,11.0) \(|\) (R,11.0) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (R,12.0)]
+\item Explored: [(R, 1.0), (R, 4.0), (P, 4.0), (S, 0.0), (H, 5.0), (R, 4.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 3.0), (R, 5.0), (R, 2.0), (R, 1.0), (R, 6.0), (R, 4.0)]
+\end{itemize}
+
+\item Removing R (MOVE: DOWN) and inserting its neighbors (R, B, R)
+\begin{itemize}
+\item Frontier: [(R,10.5) \(|\) (R,10.5) \(|\) (R,11.0) \(|\) (B,\(\infty\)) \(|\) (P,12.0) \(|\) (R,11.0) \(|\) (R,11.0) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (R,12.0)]
+\item Explored: [(R, 1.0), (R, 4.0), (P, 4.0), (S, 0.0), (H, 5.0), (R, 4.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 3.0), (R, 5.0), (R, 2.0), (R, 1.0), (R, 6.0), (R, 6.0), (R, 4.0)]
+\end{itemize}
+
+\item Removing R (MOVE: RIGHT) and inserting its neighbors (B, P, R)
+\begin{itemize}
+\item Frontier: [(R,10.5) \(|\) (R,11.0) \(|\) (R,11.0) \(|\) (B,\(\infty\)) \(|\) (P,12.0) \(|\) (R,11.0) \(|\) (R,11.0) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (R,12.0)]
+\item Explored: [(R, 1.0), (R, 4.0), (P, 4.0), (S, 0.0), (H, 5.0), (R, 4.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 3.0), (R, 5.0), (R, 2.0), (R, 1.0), (R, 6.0), (R, 5.0), (R, 6.0), (R, 4.0)]
+\end{itemize}
+
+\item Removing R (MOVE: DOWN) and inserting its neighbors (W, B)
+\begin{itemize}
+\item Frontier: [(R,11.0) \(|\) (R,11.0) \(|\) (R,11.0) \(|\) (B,\(\infty\)) \(|\) (P,12.0) \(|\) (R,12.0) \(|\) (R,11.0) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\))]
+\item Explored: [(R, 1.0), (R, 4.0), (P, 4.0), (S, 0.0), (H, 5.0), (R, 4.0), (R, 5.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 3.0), (R, 5.0), (R, 2.0), (R, 1.0), (R, 6.0), (R, 5.0), (R, 6.0), (R, 4.0)]
+\end{itemize}
+
+\item Removing R (MOVE: RIGHT) and inserting its neighbors (R, H, B)
+\begin{itemize}
+\item Frontier: [(R,11.0) \(|\) (R,11.0) \(|\) (R,11.0) \(|\) (B,\(\infty\)) \(|\) (P,12.0) \(|\) (R,12.0) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\))]
+\item Explored: [(R, 4.0), (R, 4.0), (R, 2.0), (R, 1.0), (R, 6.0), (R, 6.0), (R, 4.0), (R, 3.0), (R, 1.0), (P, 4.0), (H, 5.0), (R, 5.0), (R, 5.0), (S, 0.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 5.0), (R, 7.0)]
+\end{itemize}
+
+\item Removing R (MOVE: DOWN) and inserting its neighbors (P, R)
+\begin{itemize}
+\item Frontier: [(R,11.0) \(|\) (R,11.0) \(|\) (R,11.5) \(|\) (B,\(\infty\)) \(|\) (P,12.0) \(|\) (R,12.0) \(|\) (H,12.0) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\))]
+\item Explored: [(R, 4.0), (R, 4.0), (R, 2.0), (R, 1.0), (R, 6.0), (R, 6.0), (R, 4.0), (R, 3.0), (R, 1.0), (P, 4.0), (H, 5.0), (R, 5.0), (R, 5.0), (S, 0.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 5.0), (R, 7.0), (R, 7.0)]
+\end{itemize}
+
+\item Removing R (MOVE: DOWN) and inserting its neighbors (R, W)
+\begin{itemize}
+\item Frontier: [(R,11.0) \(|\) (P,12.0) \(|\) (R,11.5) \(|\) (P,12.5) \(|\) (B,\(\infty\)) \(|\) (R,12.0) \(|\) (H,12.0) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\))]
+\item Explored: [(R, 4.0), (R, 4.0), (R, 2.0), (R, 1.0), (R, 6.0), (R, 6.0), (R, 4.0), (R, 3.0), (R, 6.0), (R, 1.0), (P, 4.0), (H, 5.0), (R, 5.0), (R, 5.0), (S, 0.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 5.0), (R, 7.0), (R, 7.0)]
+\end{itemize}
+
+\item Removing R (MOVE: DOWN) and inserting its neighbors (R, W, P)
+\begin{itemize}
+\item Frontier: [(R,11.5) \(|\) (R,11.5) \(|\) (R,12.0) \(|\) (P,12.0) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (H,12.0) \(|\) (P,12.5) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\))]
+\item Explored: [(R, 4.0), (R, 4.0), (R, 2.0), (R, 1.0), (R, 6.0), (R, 6.0), (R, 4.0), (R, 3.0), (R, 6.0), (R, 1.0), (P, 4.0), (H, 5.0), (R, 5.0), (R, 5.0), (R, 7.0), (S, 0.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 5.0), (R, 7.0), (R, 7.0)]
+\end{itemize}
+
+\item Removing R (MOVE: DOWN) and inserting its neighbors (P, B)
+\begin{itemize}
+\item Frontier: [(R,11.5) \(|\) (R,11.5) \(|\) (R,12.0) \(|\) (P,12.0) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (H,12.0) \(|\) (P,12.5) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\))]
+\item Explored: [(R, 4.0), (R, 4.0), (R, 2.0), (R, 1.0), (R, 6.0), (R, 6.0), (R, 4.0), (R, 3.0), (R, 6.0), (R, 1.0), (P, 4.0), (R, 8.0), (H, 5.0), (R, 5.0), (R, 5.0), (R, 7.0), (S, 0.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 5.0), (R, 7.0), (R, 7.0)]
+\end{itemize}
+
+\item Removing R (MOVE: DOWN) and inserting its neighbors (P, B, R)
+\begin{itemize}
+\item Frontier: [(R,11.5) \(|\) (P,12.0) \(|\) (R,12.0) \(|\) (P,12.5) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (H,12.0) \(|\) (P,13.0) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\))]
+\item Explored: [(R, 4.0), (R, 7.0), (R, 4.0), (R, 2.0), (R, 1.0), (R, 6.0), (R, 6.0), (R, 4.0), (R, 3.0), (R, 6.0), (R, 1.0), (P, 4.0), (R, 8.0), (H, 5.0), (R, 5.0), (R, 5.0), (R, 7.0), (S, 0.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 5.0), (R, 7.0), (R, 7.0)]
+\end{itemize}
+
+\item Removing R (MOVE: DOWN) and inserting its neighbors (R, R, H)
+\begin{itemize}
+\item Frontier: [(R,12.0) \(|\) (P,12.0) \(|\) (H,12.0) \(|\) (R,12.0) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (P,13.0) \(|\) (P,13.0) \(|\) (P,12.5) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\))]
+\item Explored: [(R, 4.0), (R, 7.0), (R, 4.0), (R, 2.0), (R, 1.0), (R, 6.0), (R, 6.0), (R, 4.0), (R, 3.0), (R, 8.0), (R, 6.0), (R, 1.0), (P, 4.0), (R, 8.0), (H, 5.0), (R, 5.0), (R, 5.0), (R, 7.0), (S, 0.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 5.0), (R, 7.0), (R, 7.0)]
+\end{itemize}
+
+\item Removing H (MOVE: RIGHT) and inserting its neighbors (B, P, H)
+\begin{itemize}
+\item Frontier: [(R,12.0) \(|\) (P,12.0) \(|\) (H,12.0) \(|\) (R,12.0) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (P,13.0) \(|\) (P,13.0) \(|\) (R,12.0) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (P,12.5)]
+\item Explored: [(R, 4.0), (R, 7.0), (R, 4.0), (H, 8.5), (R, 2.0), (R, 1.0), (R, 6.0), (R, 6.0), (R, 4.0), (R, 3.0), (R, 8.0), (R, 6.0), (R, 1.0), (P, 4.0), (R, 8.0), (H, 5.0), (R, 5.0), (R, 5.0), (R, 7.0), (S, 0.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 5.0), (R, 7.0), (R, 7.0)]
+\end{itemize}
+
+\item Removing H (MOVE: RIGHT) and inserting its neighbors (R, P, R)
+\begin{itemize}
+\item Frontier: [(R,12.0) \(|\) (P,12.0) \(|\) (H,12.0) \(|\) (R,12.0) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (P,13.0) \(|\) (P,13.0) \(|\) (R,12.0) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (P,12.5) \(|\) (B,\(\infty\))]
+\item Explored: [(R, 4.0), (R, 7.0), (R, 4.0), (H, 8.5), (R, 2.0), (R, 1.0), (R, 6.0), (R, 6.0), (R, 4.0), (R, 3.0), (R, 8.0), (R, 6.0), (R, 1.0), (P, 4.0), (R, 8.0), (H, 5.0), (R, 5.0), (R, 5.0), (H, 9.0), (R, 7.0), (S, 0.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 5.0), (R, 7.0), (R, 7.0)]
+\end{itemize}
+
+\item Removing R (MOVE: UP) and inserting its neighbors (W, H)
+\begin{itemize}
+\item Frontier: [(H,12.0) \(|\) (P,12.0) \(|\) (P,13.0) \(|\) (R,12.0) \(|\) (R,12.0) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (P,13.0) \(|\) (R,12.0) \(|\) (B,\(\infty\)) \(|\) (R,13.0) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (P,12.5) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\))]
+\item Explored: [(R, 4.0), (R, 7.0), (R, 4.0), (H, 8.5), (R, 2.0), (R, 1.0), (R, 6.0), (R, 6.0), (R, 4.0), (R, 3.0), (R, 8.0), (R, 6.0), (R, 1.0), (P, 4.0), (R, 8.0), (H, 5.0), (R, 5.0), (R, 5.0), (H, 9.0), (R, 7.0), (S, 0.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 7.0), (R, 5.0), (R, 7.0), (R, 7.0)]
+\end{itemize}
+
+\item Removing H (MOVE: UP) and inserting its neighbors (H)
+\begin{itemize}
+\item Frontier: [(P,12.0) \(|\) (R,12.0) \(|\) (P,13.0) \(|\) (R,12.0) \(|\) (R,12.0) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (P,13.0) \(|\) (P,12.5) \(|\) (B,\(\infty\)) \(|\) (R,13.0) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\))]
+\item Explored: [(R, 4.0), (R, 7.0), (R, 4.0), (H, 8.5), (R, 2.0), (R, 1.0), (R, 6.0), (R, 6.0), (R, 4.0), (R, 3.0), (R, 8.0), (R, 6.0), (R, 1.0), (H, 7.5), (P, 4.0), (R, 8.0), (H, 5.0), (R, 5.0), (R, 5.0), (H, 9.0), (R, 7.0), (S, 0.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 7.0), (R, 5.0), (R, 7.0), (R, 7.0)]
+\end{itemize}
+
+\item Removing P (MOVE: RIGHT) and inserting its neighbors (B)
+\begin{itemize}
+\item Frontier: [(R,12.0) \(|\) (R,12.0) \(|\) (P,13.0) \(|\) (P,12.5) \(|\) (R,12.0) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (P,13.0) \(|\) (B,\(\infty\)) \(|\) (H,13.0) \(|\) (R,13.0) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\))]
+\item Explored: [(R, 4.0), (R, 7.0), (R, 4.0), (H, 8.5), (R, 2.0), (P, 6.0), (R, 1.0), (R, 6.0), (R, 6.0), (R, 4.0), (R, 3.0), (R, 8.0), (R, 6.0), (R, 1.0), (H, 7.5), (P, 4.0), (R, 8.0), (H, 5.0), (R, 5.0), (R, 5.0), (H, 9.0), (R, 7.0), (S, 0.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 7.0), (R, 5.0), (R, 7.0), (R, 7.0)]
+\end{itemize}
+
+\item Removing R (MOVE: RIGHT) and inserting its neighbors (P, W)
+\begin{itemize}
+\item Frontier: [(R,12.0) \(|\) (R,12.0) \(|\) (P,13.0) \(|\) (P,12.5) \(|\) (H,13.0) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (P,13.0) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (R,13.0) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\))]
+\item Explored: [(R, 4.0), (R, 7.0), (R, 4.0), (H, 8.5), (R, 2.0), (P, 6.0), (R, 1.0), (R, 6.0), (R, 6.0), (R, 4.0), (R, 3.0), (R, 8.0), (R, 6.0), (R, 1.0), (H, 7.5), (P, 4.0), (R, 8.0), (H, 5.0), (R, 5.0), (R, 5.0), (H, 9.0), (R, 7.0), (R, 8.0), (S, 0.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 7.0), (R, 5.0), (R, 7.0), (R, 7.0)]
+\end{itemize}
+
+\item Removing R (MOVE: DOWN) and inserting its neighbors (R, P, B)
+\begin{itemize}
+\item Frontier: [(R,12.0) \(|\) (P,12.5) \(|\) (P,13.0) \(|\) (P,13.0) \(|\) (H,13.0) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (P,13.5) \(|\) (R,13.0) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\))]
+\item Explored: [(R, 4.0), (R, 7.0), (R, 4.0), (H, 8.5), (R, 2.0), (P, 6.0), (R, 1.0), (R, 6.0), (R, 6.0), (R, 4.0), (R, 3.0), (R, 8.0), (R, 6.0), (R, 1.0), (H, 7.5), (P, 4.0), (R, 8.0), (H, 5.0), (R, 5.0), (R, 5.0), (H, 9.0), (R, 7.0), (R, 8.0), (R, 9.0), (S, 0.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 7.0), (R, 5.0), (R, 7.0), (R, 7.0)]
+\end{itemize}
+
+\item Removing R (MOVE: DOWN) and inserting its neighbors (R, B, R)
+\begin{itemize}
+\item Frontier: [(P,12.5) \(|\) (R,12.5) \(|\) (P,13.0) \(|\) (P,13.0) \(|\) (H,13.0) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (P,13.5) \(|\) (R,13.0) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\))]
+\item Explored: [(R, 4.0), (R, 7.0), (R, 4.0), (H, 8.5), (R, 10.0), (R, 2.0), (P, 6.0), (R, 1.0), (R, 6.0), (R, 6.0), (R, 4.0), (R, 3.0), (R, 8.0), (R, 6.0), (R, 1.0), (H, 7.5), (P, 4.0), (R, 8.0), (H, 5.0), (R, 5.0), (R, 5.0), (H, 9.0), (R, 7.0), (R, 8.0), (R, 9.0), (S, 0.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 7.0), (R, 5.0), (R, 7.0), (R, 7.0)]
+\end{itemize}
+
+\item Removing P (MOVE: DOWN) and inserting its neighbors (P)
+\begin{itemize}
+\item Frontier: [(R,12.5) \(|\) (R,12.5) \(|\) (P,13.0) \(|\) (P,13.0) \(|\) (H,13.0) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (P,13.5) \(|\) (R,13.0) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (R,13.5)]
+\item Explored: [(R, 4.0), (R, 7.0), (R, 4.0), (H, 8.5), (R, 10.0), (R, 2.0), (P, 6.0), (R, 1.0), (R, 6.0), (R, 6.0), (R, 4.0), (R, 3.0), (R, 8.0), (R, 6.0), (P, 9.0), (R, 1.0), (H, 7.5), (P, 4.0), (R, 8.0), (H, 5.0), (R, 5.0), (R, 5.0), (H, 9.0), (R, 7.0), (R, 8.0), (R, 9.0), (S, 0.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 7.0), (R, 5.0), (R, 7.0), (R, 7.0)]
+\end{itemize}
+
+\item Removing R (MOVE: DOWN) and inserting its neighbors (W, R, R)
+\begin{itemize}
+\item Frontier: [(R,12.5) \(|\) (H,13.0) \(|\) (P,13.0) \(|\) (P,13.0) \(|\) (R,13.0) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (P,13.5) \(|\) (R,13.5) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\))]
+\item Explored: [(R, 4.0), (R, 7.0), (R, 4.0), (H, 8.5), (R, 10.0), (R, 2.0), (P, 6.0), (R, 1.0), (R, 6.0), (R, 6.0), (R, 4.0), (R, 10.0), (R, 3.0), (R, 8.0), (R, 6.0), (P, 9.0), (R, 1.0), (H, 7.5), (P, 4.0), (R, 8.0), (H, 5.0), (R, 5.0), (R, 5.0), (H, 9.0), (R, 7.0), (R, 8.0), (R, 9.0), (S, 0.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 7.0), (R, 5.0), (R, 7.0), (R, 7.0)]
+\end{itemize}
+
+\item Removing R (MOVE: DOWN) and inserting its neighbors (H, R, B)
+\begin{itemize}
+\item Frontier: [(H,13.0) \(|\) (P,13.0) \(|\) (P,13.0) \(|\) (R,13.5) \(|\) (R,13.0) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (P,13.5) \(|\) (R,13.0) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (R,14.0)]
+\item Explored: [(R, 4.0), (R, 7.0), (R, 4.0), (H, 8.5), (R, 10.0), (R, 2.0), (P, 6.0), (R, 1.0), (R, 6.0), (R, 6.0), (R, 4.0), (R, 10.0), (R, 3.0), (R, 8.0), (R, 6.0), (P, 9.0), (R, 1.0), (H, 7.5), (P, 4.0), (R, 8.0), (H, 5.0), (R, 11.0), (R, 5.0), (R, 5.0), (H, 9.0), (R, 7.0), (R, 8.0), (R, 9.0), (S, 0.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 7.0), (R, 5.0), (R, 7.0), (R, 7.0)]
+\end{itemize}
+
+\item Removing H (MOVE: DOWN) and inserting its neighbors (R, H, R)
+\begin{itemize}
+\item Frontier: [(H,13.0) \(|\) (P,13.0) \(|\) (P,13.0) \(|\) (R,13.5) \(|\) (R,13.0) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (P,13.5) \(|\) (R,13.0) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (R,14.0) \(|\) (B,\(\infty\))]
+\item Explored: [(R, 4.0), (R, 7.0), (R, 4.0), (H, 8.5), (R, 10.0), (R, 2.0), (P, 6.0), (R, 1.0), (R, 6.0), (R, 6.0), (R, 4.0), (H, 11.5), (R, 10.0), (R, 3.0), (R, 8.0), (R, 6.0), (P, 9.0), (R, 1.0), (H, 7.5), (P, 4.0), (R, 8.0), (H, 5.0), (R, 11.0), (R, 5.0), (R, 5.0), (H, 9.0), (R, 7.0), (R, 8.0), (R, 9.0), (S, 0.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 7.0), (R, 5.0), (R, 7.0), (R, 7.0)]
+\end{itemize}
+
+\item Removing H (MOVE: RIGHT) and inserting its neighbors (B, H)
+\begin{itemize}
+\item Frontier: [(P,13.0) \(|\) (R,13.0) \(|\) (P,13.0) \(|\) (R,13.5) \(|\) (R,13.0) \(|\) (H,13.5) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (P,13.5) \(|\) (R,13.0) \(|\) (R,14.0) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (R,14.0) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (W,\(\infty\))]
+\item Explored: [(R, 4.0), (R, 7.0), (R, 4.0), (H, 8.5), (R, 10.0), (R, 2.0), (P, 6.0), (R, 1.0), (R, 6.0), (H, 8.0), (R, 6.0), (R, 4.0), (H, 11.5), (R, 10.0), (R, 3.0), (R, 8.0), (R, 6.0), (P, 9.0), (R, 1.0), (H, 7.5), (P, 4.0), (R, 8.0), (H, 5.0), (R, 11.0), (R, 5.0), (R, 5.0), (H, 9.0), (R, 7.0), (R, 8.0), (R, 9.0), (S, 0.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 7.0), (R, 5.0), (R, 7.0), (R, 7.0)]
+\end{itemize}
+
+\item Removing P (MOVE: DOWN) and inserting its neighbors (R)
+\begin{itemize}
+\item Frontier: [(R,13.0) \(|\) (R,13.0) \(|\) (P,13.0) \(|\) (R,13.5) \(|\) (R,13.0) \(|\) (H,13.5) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (P,13.5) \(|\) (R,14.0) \(|\) (H,14.0) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (R,14.0) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (W,\(\infty\))]
+\item Explored: [(R, 4.0), (R, 7.0), (R, 4.0), (P, 10.0), (H, 8.5), (R, 10.0), (R, 2.0), (P, 6.0), (R, 1.0), (R, 6.0), (H, 8.0), (R, 6.0), (R, 4.0), (H, 11.5), (R, 10.0), (R, 3.0), (R, 8.0), (R, 6.0), (P, 9.0), (R, 1.0), (H, 7.5), (P, 4.0), (R, 8.0), (H, 5.0), (R, 11.0), (R, 5.0), (R, 5.0), (H, 9.0), (R, 7.0), (R, 8.0), (R, 9.0), (S, 0.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 7.0), (R, 5.0), (R, 7.0), (R, 7.0)]
+\end{itemize}
+
+\item Removing R (MOVE: RIGHT) and inserting its neighbors (R, R, B)
+\begin{itemize}
+\item Frontier: [(P,13.0) \(|\) (R,13.0) \(|\) (H,13.5) \(|\) (R,13.5) \(|\) (R,13.0) \(|\) (H,14.0) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (P,13.5) \(|\) (R,14.0) \(|\) (R,14.5) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (R,14.0) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (W,\(\infty\))]
+\item Explored: [(R, 4.0), (R, 7.0), (R, 4.0), (P, 10.0), (H, 8.5), (R, 10.0), (R, 2.0), (P, 6.0), (R, 1.0), (R, 6.0), (H, 8.0), (R, 6.0), (R, 4.0), (H, 11.5), (R, 10.0), (R, 3.0), (R, 8.0), (R, 6.0), (R, 10.0), (P, 9.0), (R, 1.0), (H, 7.5), (P, 4.0), (R, 8.0), (H, 5.0), (R, 11.0), (R, 5.0), (R, 5.0), (H, 9.0), (R, 7.0), (R, 8.0), (R, 9.0), (S, 0.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 7.0), (R, 5.0), (R, 7.0), (R, 7.0)]
+\end{itemize}
+
+\item Removing P (MOVE: DOWN) and inserting its neighbors (R, R, P)
+\begin{itemize}
+\item Frontier: [(R,13.0) \(|\) (R,13.0) \(|\) (H,13.5) \(|\) (R,13.5) \(|\) (P,13.5) \(|\) (H,14.0) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (R,14.0) \(|\) (R,14.0) \(|\) (R,14.5) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (W,\(\infty\))]
+\item Explored: [(R, 4.0), (R, 7.0), (R, 4.0), (P, 10.0), (H, 8.5), (R, 10.0), (R, 2.0), (P, 6.0), (R, 1.0), (R, 6.0), (H, 8.0), (R, 6.0), (R, 4.0), (H, 11.5), (R, 10.0), (R, 3.0), (R, 8.0), (R, 6.0), (R, 10.0), (P, 9.0), (P, 9.0), (R, 1.0), (H, 7.5), (P, 4.0), (R, 8.0), (H, 5.0), (R, 11.0), (R, 5.0), (R, 5.0), (H, 9.0), (R, 7.0), (R, 8.0), (R, 9.0), (S, 0.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 7.0), (R, 5.0), (R, 7.0), (R, 7.0)]
+\end{itemize}
+
+\item Removing R (MOVE: RIGHT) and inserting its neighbors (H, B)
+\begin{itemize}
+\item Frontier: [(R,13.0) \(|\) (P,13.5) \(|\) (R,13.5) \(|\) (R,13.5) \(|\) (R,14.0) \(|\) (H,13.5) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (R,14.0) \(|\) (H,14.0) \(|\) (R,14.5) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (R,14.5)]
+\item Explored: [(R, 4.0), (R, 7.0), (R, 4.0), (P, 10.0), (H, 8.5), (R, 10.0), (R, 2.0), (P, 6.0), (R, 1.0), (R, 6.0), (H, 8.0), (R, 6.0), (R, 4.0), (H, 11.5), (R, 10.0), (R, 3.0), (R, 8.0), (R, 6.0), (R, 10.0), (P, 9.0), (P, 9.0), (R, 1.0), (H, 7.5), (P, 4.0), (R, 8.0), (H, 5.0), (R, 11.0), (R, 5.0), (R, 5.0), (H, 9.0), (R, 7.0), (R, 8.0), (R, 9.0), (S, 0.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 7.0), (R, 5.0), (R, 7.0), (R, 7.0), (R, 11.0)]
+\end{itemize}
+
+\item Removing H (MOVE: DOWN) and inserting its neighbors (R, W)
+\begin{itemize}
+\item Frontier: [(R,13.0) \(|\) (P,13.5) \(|\) (R,13.5) \(|\) (R,13.5) \(|\) (R,14.0) \(|\) (H,13.0) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (R,14.0) \(|\) (H,14.0) \(|\) (R,14.5) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (R,14.5)]
+\item Explored: [(R, 4.0), (R, 7.0), (R, 4.0), (P, 10.0), (H, 8.5), (R, 10.0), (R, 2.0), (P, 6.0), (R, 1.0), (R, 6.0), (H, 8.0), (R, 6.0), (R, 4.0), (H, 11.5), (R, 10.0), (R, 3.0), (R, 8.0), (R, 6.0), (R, 10.0), (P, 9.0), (P, 9.0), (R, 1.0), (H, 7.5), (P, 4.0), (R, 8.0), (H, 5.0), (R, 11.0), (H, 11.5), (R, 5.0), (R, 5.0), (H, 9.0), (R, 7.0), (R, 8.0), (R, 9.0), (S, 0.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 7.0), (R, 5.0), (R, 7.0), (R, 7.0), (R, 11.0)]
+\end{itemize}
+
+\item Removing R (MOVE: DOWN) and inserting its neighbors (G, R, B)
+\begin{itemize}
+\item Frontier: [(P,13.5) \(|\) (R,13.5) \(|\) (R,13.5) \(|\) (R,14.5) \(|\) (R,14.0) \(|\) (H,13.0) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (R,14.0) \(|\) (H,14.0) \(|\) (R,13.5) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (R,14.5)]
+\item Explored: [(R, 4.0), (R, 7.0), (R, 4.0), (P, 10.0), (H, 8.5), (R, 10.0), (R, 2.0), (P, 6.0), (R, 1.0), (R, 6.0), (H, 8.0), (R, 6.0), (R, 4.0), (H, 11.5), (R, 10.0), (R, 3.0), (R, 8.0), (R, 6.0), (R, 10.0), (P, 9.0), (P, 9.0), (R, 1.0), (H, 7.5), (P, 4.0), (R, 8.0), (H, 5.0), (R, 11.0), (H, 11.5), (R, 5.0), (R, 5.0), (H, 9.0), (R, 7.0), (R, 8.0), (R, 9.0), (S, 0.0), (R, 12.5), (R, 3.0), (R, 2.0), (H, 4.5), (R, 7.0), (R, 5.0), (R, 7.0), (R, 7.0), (R, 11.0)]
+\end{itemize}
+
+\item Removing P (MOVE: DOWN) and inserting its neighbors (R)
+\begin{itemize}
+\item Frontier: [(R,13.5) \(|\) (R,14.0) \(|\) (R,13.5) \(|\) (R,14.5) \(|\) (R,14.0) \(|\) (H,13.0) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (H,14.0) \(|\) (R,13.5) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (R,14.5) \(|\) (G,13.5)]
+\item Explored: [(R, 4.0), (R, 7.0), (R, 4.0), (P, 10.0), (P, 10.0), (H, 8.5), (R, 10.0), (R, 2.0), (P, 6.0), (R, 1.0), (R, 6.0), (H, 8.0), (R, 6.0), (R, 4.0), (H, 11.5), (R, 10.0), (R, 3.0), (R, 8.0), (R, 6.0), (R, 10.0), (P, 9.0), (P, 9.0), (R, 1.0), (H, 7.5), (P, 4.0), (R, 8.0), (H, 5.0), (R, 11.0), (H, 11.5), (R, 5.0), (R, 5.0), (H, 9.0), (R, 7.0), (R, 8.0), (R, 9.0), (S, 0.0), (R, 12.5), (R, 3.0), (R, 2.0), (H, 4.5), (R, 7.0), (R, 5.0), (R, 7.0), (R, 7.0), (R, 11.0)]
+\end{itemize}
+
+\item Removing R (MOVE: RIGHT) and inserting its neighbors (B, R)
+\begin{itemize}
+\item Frontier: [(R,13.5) \(|\) (R,14.0) \(|\) (H,13.0) \(|\) (R,14.5) \(|\) (R,14.0) \(|\) (R,13.5) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (H,14.0) \(|\) (G,13.5) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (R,14.5)]
+\item Explored: [(R, 4.0), (R, 7.0), (R, 4.0), (P, 10.0), (P, 10.0), (H, 8.5), (R, 10.0), (R, 2.0), (P, 6.0), (R, 1.0), (R, 6.0), (H, 8.0), (R, 6.0), (R, 4.0), (H, 11.5), (R, 10.0), (R, 3.0), (R, 8.0), (R, 6.0), (R, 10.0), (P, 9.0), (P, 9.0), (R, 1.0), (H, 7.5), (P, 4.0), (R, 8.0), (H, 5.0), (R, 11.0), (H, 11.5), (R, 5.0), (R, 5.0), (H, 9.0), (R, 7.0), (R, 8.0), (R, 9.0), (S, 0.0), (R, 12.5), (R, 11.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 7.0), (R, 5.0), (R, 7.0), (R, 7.0), (R, 11.0)]
+\end{itemize}
+
+\item Removing R (MOVE: DOWN) and inserting its neighbors (R, R, R)
+\begin{itemize}
+\item Frontier: [(H,13.0) \(|\) (R,14.0) \(|\) (R,13.5) \(|\) (R,14.5) \(|\) (R,14.0) \(|\) (G,13.5) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (H,14.0) \(|\) (R,15.0) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (R,14.5)]
+\item Explored: [(R, 4.0), (R, 7.0), (R, 4.0), (P, 10.0), (P, 10.0), (H, 8.5), (R, 10.0), (R, 2.0), (P, 6.0), (R, 1.0), (R, 6.0), (H, 8.0), (R, 6.0), (R, 4.0), (H, 11.5), (R, 10.0), (R, 3.0), (R, 8.0), (R, 6.0), (R, 10.0), (P, 9.0), (P, 9.0), (R, 1.0), (H, 7.5), (P, 4.0), (R, 8.0), (H, 5.0), (R, 11.0), (H, 11.5), (R, 5.0), (R, 5.0), (H, 9.0), (R, 7.0), (R, 8.0), (R, 9.0), (S, 0.0), (R, 12.5), (R, 11.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 7.0), (R, 5.0), (R, 7.0), (R, 7.0), (R, 11.0), (R, 10.0)]
+\end{itemize}
+
+\item Removing H (MOVE: DOWN) and inserting its neighbors (R, W)
+\begin{itemize}
+\item Frontier: [(R,13.5) \(|\) (R,14.0) \(|\) (G,13.5) \(|\) (R,14.5) \(|\) (R,14.0) \(|\) (H,14.0) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (R,14.5) \(|\) (R,14.0) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (R,15.0) \(|\) (R,15.0)]
+\item Explored: [(R, 4.0), (R, 7.0), (R, 4.0), (P, 10.0), (P, 10.0), (H, 8.5), (R, 10.0), (R, 2.0), (P, 6.0), (R, 1.0), (R, 6.0), (H, 8.0), (R, 6.0), (R, 4.0), (H, 11.5), (R, 10.0), (R, 3.0), (R, 8.0), (R, 6.0), (R, 10.0), (P, 9.0), (P, 9.0), (R, 1.0), (H, 7.5), (P, 4.0), (R, 8.0), (H, 5.0), (R, 11.0), (H, 11.5), (R, 5.0), (R, 5.0), (H, 9.0), (R, 7.0), (R, 8.0), (R, 9.0), (S, 0.0), (R, 12.5), (R, 11.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 7.0), (R, 5.0), (R, 7.0), (R, 7.0), (R, 11.0), (R, 10.0)]
+\end{itemize}
+
+\item Removing R (MOVE: DOWN) and inserting its neighbors (R, R)
+\begin{itemize}
+\item Frontier: [(G,13.5) \(|\) (R,14.0) \(|\) (H,14.0) \(|\) (R,14.5) \(|\) (R,14.0) \(|\) (R,14.0) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (R,14.5) \(|\) (R,15.0) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (B,\(\infty\)) \(|\) (W,\(\infty\)) \(|\) (R,15.0)]
+\item Explored: [(R, 4.0), (R, 7.0), (R, 4.0), (P, 10.0), (P, 10.0), (H, 8.5), (R, 10.0), (R, 2.0), (R, 12.5), (P, 6.0), (R, 1.0), (R, 6.0), (H, 8.0), (R, 6.0), (R, 4.0), (H, 11.5), (R, 10.0), (R, 3.0), (R, 8.0), (R, 6.0), (R, 10.0), (P, 9.0), (P, 9.0), (R, 1.0), (H, 7.5), (P, 4.0), (R, 8.0), (H, 5.0), (R, 11.0), (H, 11.5), (R, 5.0), (R, 5.0), (H, 9.0), (R, 7.0), (R, 8.0), (R, 9.0), (S, 0.0), (R, 12.5), (R, 11.0), (R, 3.0), (R, 2.0), (H, 4.5), (R, 7.0), (R, 5.0), (R, 7.0), (R, 7.0), (R, 11.0), (R, 10.0)]
+\end{itemize}
+
+\end{enumerate}
+\section{Results}
+\begin{itemize}
+\item The order in which the nodes will exit the fringe is displayed above.
+\item Total cost of optimal path: 13.5
+\item Number of expanded nodes: 48 (not counting start)
+\item Optimal path (in RLUD format): \texttt{RRRDRRDDDRRDDDDD}
+\item Optimal path (coordinates):
+
+$ (0,0) \rightarrow (0,1) \rightarrow (0,2) \rightarrow (0,3) \rightarrow (1,3) \rightarrow (1,4) \rightarrow (1,5) \rightarrow (2,5) \rightarrow (3,5) \rightarrow (4,5) \rightarrow (4,6) \rightarrow (4,7) \rightarrow (5,7) \rightarrow (6,7) \rightarrow (7,7) \rightarrow (8,7) \rightarrow (9,7) $
+
+\end{itemize}
+\section{Grid Visualization}
+\begin{verbatim}
+* * * * B W R H H H 
+R B B * * * R R B H 
+R P P R B * R R B R 
+R R R R W * P P R R 
+R R B R R * * * R B 
+B W R P P R B * R R 
+P P R R R R R * B B 
+R B R R R W H * R R 
+R R R R B R R * B R 
+H H H B B R R * R R 
+\end{verbatim}
+\section{Two other admissable heuristics}
+\begin{itemize}
+\item Euclidean distance  (\(\sqrt{(x_2 - x_1)^2 +(y_2 - y_1)^2 }\))\\
+Straight-line distance, obviously always smaller than or equal to manhattan. Therefore, admissable.
+\item Zero heuristic (always return 0) \\
+Nothing much here, always return 0 as heuristic. Never overestimates (obviously), therefore admissable. A* actually becomes \(BFS\).
+\end{itemize}
+\end{document}
